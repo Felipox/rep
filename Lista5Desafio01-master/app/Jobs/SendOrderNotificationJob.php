@@ -28,6 +28,7 @@ class SendOrderNotificationJob implements ShouldQueue
 
     public function handle(NotificationLogRepositoryInterface $log_repository): void
     {
+        
         Mail::to($this->user->email)->send(    
         new OrderNotification($this->order, $this->user));
 

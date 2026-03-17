@@ -12,9 +12,9 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('notification_logs', function (Blueprint $table) {
-            $table->uuid('id')->primary();
-            $table->foreignUuid('user_id');
-            $table->foreignUuid('order_id');
+            $table->id('id')->primary();
+            $table->foreignId('user_id');
+            $table->foreignId('order_id');
             $table->text('message');
             $table->string('status');
             $table->integer('attempts');

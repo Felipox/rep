@@ -29,15 +29,9 @@ class AuthController extends Controller
             'token_type'=> 'Bearer'
         ], 201);
         }
-        catch (\Exception $e) {
-    $code = $e->getCode();
-    // Se o código não for um status HTTP válido, usa 500
-    $httpCode = ($code >= 400 && $code < 600) ? $code : 500;
-
-    return response()->json([
-        'error' => $e->getMessage()
-    ], $httpCode);
-}
+        catch(\Exception $e){
+            return response()->json(['Erro'=> $e->getMessage()], $e->getCode()?: 500);
+        }
     }
 
     public function login(LoginUserRequest $request)
