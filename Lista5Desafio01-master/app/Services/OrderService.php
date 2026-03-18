@@ -40,7 +40,7 @@ class OrderService
     {
         $order_id = $this->order_repository->findById($id);
         if(!$order_id){
-            return new Exception("Erro: Pedido nao encontrado",404);
+            throw new Exception("Erro: Pedido nao encontrado",404);
         }
         
         $order = $this->order_repository->update($id,$data);
@@ -48,8 +48,8 @@ class OrderService
         return $order;
     }
 
-    public function findAll()
+    public function findAll(int $per_page=2)
     {
-        return $this->order_repository->findAll();
+        return $this->order_repository->findAll($per_page);
     }
 }

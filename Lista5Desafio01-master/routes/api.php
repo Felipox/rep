@@ -21,5 +21,5 @@ Route::middleware('auth:sanctum')->group(function(){
     Route::post('/orders', [OrderController::class, 'store']);
     Route::put('/orders/{order}', [OrderController::class, 'update']);
     Route::patch('/orders/{order}', [OrderController::class, 'edit']);
-    Route::get('/notifications/{user_id}', [NotificationLogController::class,'index']);
+    Route::get('/notifications', [NotificationLogController::class,'index']);
 });

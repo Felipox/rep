@@ -15,10 +15,10 @@ class NotificationLogController extends Controller
         $this->notification_service = $notification_service;
     }
 
-    public function index(string $user_id)
+    public function index(Request $request)
     {
         try{
-            $notifications = $this->notification_service->findAllByUser($user_id);
+            $notifications = $this->notification_service->findAllByUser($request->user()->id);
 
             return response()->json([
                 'Sucesso'=> 'Pedidos listados',

@@ -40,17 +40,25 @@ class OrderEloquentRepository implements OrderRepositoryInterface
             return null;
         }
 
+        if (isset($data['status'])) {
+        OrderStatus::from($data['status']); 
+    }
+
         $order_id->update($data);
 
         return $this->toEntity($order_id);
 
     }
 
-    public function findAll(): array
+    public function findAll(int $per_page=2)
     {
-        $orders = $this->model->all();
+        $paginator = $this->model->paginate($per_page);
+        
+        $paginator->getCollection()->transform(function ($order){
+            return $this->toEntity($order);
+        });
 
-        return $orders->map(fn($order) => $this->toEntity($order))->all();
+        return $paginator;
     }
 
     private function toEntity(Order $model)

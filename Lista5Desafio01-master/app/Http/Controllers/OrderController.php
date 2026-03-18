@@ -104,7 +104,7 @@ class OrderController extends Controller
         catch(Exception $e){
             return response()->json([
                 'Erro'=> $e->getMessage()
-            ],$e->getCode());
+            ],404);
         
         }
     }

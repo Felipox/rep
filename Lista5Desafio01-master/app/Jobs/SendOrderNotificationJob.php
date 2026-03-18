@@ -28,7 +28,7 @@ class SendOrderNotificationJob implements ShouldQueue
 
     public function handle(NotificationLogRepositoryInterface $log_repository): void
     {
-        
+        try{
         Mail::to($this->user->email)->send(    
         new OrderNotification($this->order, $this->user));
 
@@ -39,6 +39,17 @@ class SendOrderNotificationJob implements ShouldQueue
             'status'=> NotificationStatus::SENT->value,
             'attempts'=>$this->attempts()
         ]);
+        }
+        catch (Exception $e) {
+        $log_repository->create([
+            'user_id'=> $this->user->id,
+            'order_id'=> $this->order->id,
+            'message'=> "Falha na tentativa " . $this->attempts() . ": " . $e->getMessage(),
+            'status'=> NotificationStatus::FAILED->value,
+            'attempts'=>$this->attempts()
+        ]);
+        throw $e;
+        }
     }
 
     public function failed(\Throwable $exception)
